@@ -32,7 +32,7 @@ def post_share(request, post_id):
 
 
 def post_list(request, tag_slug=None):
-    object_list = Post.published.all()
+    object_list = Post.published.all().order_by('-publish')
 
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
@@ -40,7 +40,6 @@ def post_list(request, tag_slug=None):
 
     paginator = Paginator(object_list, 3)
     page = request.GET.get('page')
-    total_posts = object_list.count()
     tag = None
 
     try:
@@ -53,8 +52,7 @@ def post_list(request, tag_slug=None):
                   'blog/post/list.html',
                   {'page': page,
                    'posts': posts,
-                   'tag': tag,
-                   'total_posts': total_posts})
+                   'tag': tag})
 
 
 def post_detail(request, year, month, day, post):

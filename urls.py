@@ -1,6 +1,10 @@
 from django.conf.urls import url
 from . import views
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import PostSitemap
 
+
+sitemaps = {'posts': PostSitemap}
 
 urlpatterns = [
     # post view
